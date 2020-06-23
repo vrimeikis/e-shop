@@ -6,6 +6,8 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 /**
  * Class ProductController
@@ -34,10 +36,15 @@ class ProductController extends Controller
     /**
      * @param ProductStoreRequest $request
      * @return RedirectResponse
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
      */
     public function store(ProductStoreRequest $request): RedirectResponse
     {
-        Product::query()->create($request->getData());
+        $product = Product::query()->create($request->getData());
+        if ($image1 = $request->getImage1()) {
+            $product->addMedia($image1)->toMediaCollection('product_images');
+        }
 
         return redirect()->route('products.index')
             ->with('status', 'Created.');
