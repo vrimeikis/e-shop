@@ -20,8 +20,9 @@ class ProductController extends Controller
     {
         $products = Product::query()->paginate();
 
+        /** @var Product $product */
         foreach ($products as &$product) {
-            $product['images'] = $product->getFirstImageUrl();
+            $product['images'] = $product->getAllImagesUrls();
         }
 
         return response()->json($products);
