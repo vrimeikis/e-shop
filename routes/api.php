@@ -26,5 +26,11 @@ Route::namespace('API\Auth')->prefix('auth')->group(function () {
 
 Route::namespace('API')->group(function () {
     Route::get('products', 'ProductController@index');
+
+    Route::middleware('auth:api')->group(function () {
+        Route::get('order', 'OrderController@index');
+        Route::post('order', 'OrderController@store');
+        Route::get('order/{order}', 'OrderController@show');
+    });
 });
 
