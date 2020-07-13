@@ -113,6 +113,7 @@
                                     <th>Price</th>
                                     <th>VAT</th>
                                     <th>Quantity</th>
+                                    <th>Actions</th>
                                 </tr>
 
                                 @foreach($item->items as $orderItem)
@@ -126,6 +127,9 @@
                                         <td>{{ $orderItem->price }}</td>
                                         <td>{{ $orderItem->vat }}</td>
                                         <td>{{ $orderItem->quantity }}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-outline-primary" href="{{ route('orders.item.edit', ['order' => $item->id, 'orderItem' => $orderItem->id]) }}">Edit</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </table>
