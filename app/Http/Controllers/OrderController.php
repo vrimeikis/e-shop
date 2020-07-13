@@ -47,8 +47,16 @@ class OrderController extends Controller
             ->with('status', 'Order updated!');
     }
 
+    /**
+     * @param Order $order
+     * @return View
+     */
     public function show(Order $order): View
     {
+        $order->load('user');
+        $order->load('items');
+        $order->load('items.product');
 
+        return view('orders.show', ['order' => $order]);
     }
 }

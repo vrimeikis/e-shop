@@ -3,8 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class OrderUpdateRequest
+ * @package App\Http\Requests
+ */
 class OrderUpdateRequest extends FormRequest
 {
     /**
@@ -33,6 +36,9 @@ class OrderUpdateRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getData(): array
     {
         return [
