@@ -59,50 +59,76 @@
                                 <label for="customer_title">Title</label>
                                 <input class="form-control @error('customer_title') is-invalid @enderror"
                                        id="customer_title" type="text"
-                                       name="customer_title" value="{{ old('customer_title', $item->customer_title) }}">
+                                       name="customer_title"
+                                       value="{{ old('customer_title', $item->customer_title ?? null) }}">
                                 @error('customer_title')
                                 <em class="alert-danger">{{ $message }}</em>
                                 @enderror
                             </div>
 
                             <div class="form-group">
-                                <label for="slug">Slug</label>
-                                <input class="form-control @error('slug') is-invalid @enderror" id="slug" type="text"
-                                       name="slug" value="{{ old('slug') }}">
-                                @error('slug')
+                                <label for="customer_email">E-mail</label>
+                                <input class="form-control @error('customer_email') is-invalid @enderror"
+                                       id="customer_email" type="text"
+                                       name="customer_email"
+                                       value="{{ old('customer_email', $item->customer_email ?? null) }}">
+                                @error('customer_email')
                                 <em class="alert-danger">{{ $message }}</em>
                                 @enderror
                             </div>
 
                             <div class="form-group">
-                                <label for="price">Price</label>
-                                <input class="form-control @error('price') is-invalid @enderror" id="price" type="text"
-                                       name="price" value="{{ old('price', 0.01) }}" min="0.01">
-                                @error('price')
-                                <em class="alert-danger">{{ $message }}</em>
-                                @enderror
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea class="form-control @error('description') is-invalid @enderror"
-                                          id="description" name="description">{{ old('description') }}</textarea>
-                                @error('description')
+                                <label for="customer_phone">Phone</label>
+                                <input class="form-control @error('customer_phone') is-invalid @enderror"
+                                       id="customer_phone" type="text"
+                                       name="customer_phone"
+                                       value="{{ old('customer_phone', $item->customer_phone ?? null) }}">
+                                @error('customer_phone')
                                 <em class="alert-danger">{{ $message }}</em>
                                 @enderror
                             </div>
 
                             <div class="form-group">
-                                <label for="quantity">Quantity</label>
-                                <input class="form-control @error('quantity') is-invalid @enderror" id="quantity"
-                                       type="text"
-                                       name="quantity" value="{{ old('quantity', 0) }}">
-                                @error('quantity')
+                                <label for="customer_address">Address</label>
+                                <input class="form-control @error('customer_address') is-invalid @enderror"
+                                       id="customer_address" type="text"
+                                       name="customer_address"
+                                       value="{{ old('customer_address', $item->customer_address ?? null) }}">
+                                @error('customer_address')
                                 <em class="alert-danger">{{ $message }}</em>
                                 @enderror
                             </div>
 
+                        </div>
+
+                        <div class="card-header">
+                            Order Items
+                        </div>
+
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                    <th>VAT</th>
+                                    <th>Quantity</th>
+                                </tr>
+
+                                @foreach($item->items as $orderItem)
+                                    <tr>
+                                        <td>
+                                            @if ($orderItem->product)
+                                                <img src="{{ $orderItem->product->getFirstImageUrl() }}" width="70" alt="">
+                                            @endif
+                                        </td>
+                                        <td>{{ $orderItem->title }}</td>
+                                        <td>{{ $orderItem->price }}</td>
+                                        <td>{{ $orderItem->vat }}</td>
+                                        <td>{{ $orderItem->quantity }}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
                         </div>
 
                         <div class="card-footer">
