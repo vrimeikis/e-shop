@@ -25,6 +25,8 @@ Route::namespace('API\Auth')->prefix('auth')->group(function () {
 });
 
 Route::namespace('API')->group(function () {
+    Route::get('search', 'SearchController@search');
+
     Route::get('products', 'ProductController@index');
 
     Route::middleware('auth:api')->group(function () {
