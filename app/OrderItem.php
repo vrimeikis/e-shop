@@ -33,6 +33,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|OrderItem whereUpdatedAt($value)
  * @method static Builder|OrderItem whereVat($value)
  * @mixin \Eloquent
+ * @property-read \App\Product|null $product
  */
 class OrderItem extends Model
 {

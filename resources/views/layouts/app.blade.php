@@ -40,6 +40,9 @@
                             <a class="nav-link" href="{{ route('products.index') }}">{{ __('Products') }}</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('categories.index') }}">{{ __('Categories') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('orders.index') }}">{{ __('Orders') }}</a>
                         </li>
                     @endauth

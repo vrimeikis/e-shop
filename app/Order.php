@@ -36,6 +36,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Order whereUpdatedAt($value)
  * @method static Builder|Order whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\User|null $user
  */
 class Order extends Model
 {
