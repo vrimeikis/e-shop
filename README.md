@@ -13,6 +13,7 @@ E-shop administration and api FE
 - Run `php artisan storage:link` command.
 - Run `php artisan passport:install` command.
 - Change `APP_URL` by your own domain on `.env` file.
+- Create admin user run `php artisan backend:new-admin` command and follow instructions.
 - Go to your domain on your browser.
 
 **P.S.**: If don't use virtualization, run `php artisan serve` command. Use `--port` parameter if need different port.
