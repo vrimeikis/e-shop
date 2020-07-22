@@ -50,6 +50,38 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="image2">Image 2</label>
+                                <input class="form-control-file" id="image2" name="image2" value="" type="file">
+                                @error('image2')
+                                <em class="alert-danger">{{ $message }}</em>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image3">Image 3</label>
+                                <input class="form-control-file" id="image3" name="image3" value="" type="file">
+                                @error('image3')
+                                <em class="alert-danger">{{ $message }}</em>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image4">Image 4</label>
+                                <input class="form-control-file" id="image4" name="image4" value="" type="file">
+                                @error('image4')
+                                <em class="alert-danger">{{ $message }}</em>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image5">Image 5</label>
+                                <input class="form-control-file" id="image5" name="image5" value="" type="file">
+                                @error('image5')
+                                <em class="alert-danger">{{ $message }}</em>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="price">Price</label>
                                 <input class="form-control @error('price') is-invalid @enderror" id="price" type="text"
                                        name="price" value="{{ old('price', 0.01) }}" min="0.01">

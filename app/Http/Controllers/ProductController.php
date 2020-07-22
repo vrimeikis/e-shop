@@ -47,8 +47,24 @@ class ProductController extends Controller
     {
         $product = Product::query()->create($request->getData());
 
-        if ($image1 = $request->getImage1()) {
-            $product->addMedia($image1)->toMediaCollection('product_images');
+        if ($image = $request->getImage1()) {
+            $product->addMedia($image)->toMediaCollection('product_images');
+        }
+
+        if ($image = $request->getImage2()) {
+            $product->addMedia($image)->toMediaCollection('product_images');
+        }
+
+        if ($image = $request->getImage3()) {
+            $product->addMedia($image)->toMediaCollection('product_images');
+        }
+
+        if ($image = $request->getImage4()) {
+            $product->addMedia($image)->toMediaCollection('product_images');
+        }
+
+        if ($image = $request->getImage5()) {
+            $product->addMedia($image)->toMediaCollection('product_images');
         }
 
         $product->categories()->sync($request->getCatIds());

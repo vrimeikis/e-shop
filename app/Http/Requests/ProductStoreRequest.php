@@ -37,6 +37,10 @@ class ProductStoreRequest extends FormRequest
             'description' => 'nullable|string',
             'quantity' => 'required|integer|min:0',
             'image1' => 'nullable|image',
+            'image2' => 'nullable|image',
+            'image3' => 'nullable|image',
+            'image4' => 'nullable|image',
+            'image5' => 'nullable|image',
             'categories' => 'nullable|array',
         ];
     }
@@ -124,5 +128,37 @@ class ProductStoreRequest extends FormRequest
     public function getImage1(): ?UploadedFile
     {
         return $this->file('image1');
+    }
+
+    /**
+     * @return UploadedFile|null
+     */
+    public function getImage2(): ?UploadedFile
+    {
+        return $this->file('image2');
+    }
+
+    /**
+     * @return UploadedFile|null
+     */
+    public function getImage3(): ?UploadedFile
+    {
+        return $this->file('image3');
+    }
+
+    /**
+     * @return UploadedFile|null
+     */
+    public function getImage4(): ?UploadedFile
+    {
+        return $this->file('image4');
+    }
+
+    /**
+     * @return UploadedFile|null
+     */
+    public function getImage5(): ?UploadedFile
+    {
+        return $this->file('image5');
     }
 }
