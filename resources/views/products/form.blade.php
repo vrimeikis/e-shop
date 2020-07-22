@@ -73,6 +73,16 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="categories">Categories</label>
+                                @foreach($categories as $id => $title)
+                                    <input type="checkbox" id="categories" name="categories[]"
+                                           value="{{ $id }}"
+                                           @if(in_array($id, old('categories', $categoryIds ?? []))) checked @endif
+                                    > {{ $title }}
+                                @endforeach
+                            </div>
+
+                            <div class="form-group">
                                 <label for="description">Description</label>
                                 <textarea class="form-control @error('description') is-invalid @enderror"
                                           id="description" name="description">{{ old('description') }}</textarea>

@@ -37,6 +37,7 @@ class ProductStoreRequest extends FormRequest
             'description' => 'nullable|string',
             'quantity' => 'required|integer|min:0',
             'image1' => 'nullable|image',
+            'categories' => 'nullable|array',
         ];
     }
 
@@ -53,6 +54,14 @@ class ProductStoreRequest extends FormRequest
             'description' => $this->getDescription(),
             'quantity' => $this->getQuantity(),
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getCatIds(): array
+    {
+        return $this->input('categories', []);
     }
 
     /**

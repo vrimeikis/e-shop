@@ -7,6 +7,10 @@ namespace App\DTO;
 use App\DTO\Base\DTO;
 use App\Product;
 
+/**
+ * Class ProductDTO
+ * @package App\DTO
+ */
 class ProductDTO extends DTO
 {
     /**
@@ -23,6 +27,9 @@ class ProductDTO extends DTO
         $this->product = $product;
     }
 
+    /**
+     * @return array
+     */
     protected function jsonData(): array
     {
         return [
@@ -31,11 +38,19 @@ class ProductDTO extends DTO
             'slug' => $this->product->slug,
             'images' => $this->product->getAllImagesUrls(),
             'price' => $this->product->price,
-            'categories' => [],
+            'categories' => $this->getCatTitles(),
             'vat' => $this->product->vat,
             'description' => $this->product->description,
             'inStock' => $this->product->quantity,
             'size' => null,
         ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getCatTitles(): array
+    {
+        return $this->product->categories->pluck('title')->toArray();
     }
 }

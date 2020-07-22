@@ -3,7 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -37,6 +39,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @mixin \Eloquent
  * @property-read MediaCollection|Media[] $media
  * @property-read int|null $media_count
+ * @property-read Collection|Category[] $categories
+ * @property-read int|null $categories_count
  */
 class Product extends Model implements HasMedia
 {
@@ -50,6 +54,14 @@ class Product extends Model implements HasMedia
         'description',
         'quantity',
     ];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
+    }
 
     /**
      * @return string

@@ -21,6 +21,7 @@ class ProductController extends Controller
     public function index(): JsonResponse
     {
         $products = Product::query()
+            ->with('categories')
             ->orderByDesc('created_at')
             ->paginate();
 
