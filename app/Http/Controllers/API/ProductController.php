@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\DTO\Base\CollectionDTO;
+use App\DTO\Base\PaginateLengthAwareDTO;
+use App\DTO\ProductDTO;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /**
  * Class ProductController
@@ -18,13 +20,35 @@ class ProductController extends Controller
      */
     public function index(): JsonResponse
     {
-        $products = Product::query()->paginate();
+        $products = Product::query()
+            ->orderByDesc('created_at')
+            ->paginate();
+
+        $paginateDTO = new PaginateLengthAwareDTO($products);
+        $productsDTO = new CollectionDTO();
 
         /** @var Product $product */
-        foreach ($products as &$product) {
-            $product['images'] = $product->getAllImagesUrls();
+        foreach ($products as $product) {
+            $productsDTO->pushItem(new ProductDTO($product));
         }
 
-        return response()->json($products);
+        $paginateDTO->setData($productsDTO);
+
+        return response()->json($paginateDTO);
+    }
+
+    /**
+     * @param string $slug
+     * @return JsonResponse
+     */
+    public function show(string $slug): JsonResponse
+    {
+        $product = Product::query()
+            ->where('slug', '=', $slug)
+            ->firstOrFail();
+
+        $productDTO = new ProductDTO($product);
+
+        return response()->json($productDTO);
     }
 }

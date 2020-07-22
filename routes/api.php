@@ -28,6 +28,7 @@ Route::namespace('API')->group(function () {
     Route::get('search', 'SearchController@search');
 
     Route::get('products', 'ProductController@index');
+    Route::get('products/{slug}', 'ProductController@show');
 
     Route::middleware('auth:api')->group(function () {
         Route::get('order', 'OrderController@index');
