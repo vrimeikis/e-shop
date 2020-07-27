@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Feature;
 use App\Http\Requests\ProductStoreRequest;
 use App\Product;
 use Illuminate\Http\RedirectResponse;
@@ -33,8 +34,13 @@ class ProductController extends Controller
     {
         $categories = Category::query()
             ->pluck('title', 'id');
+        $features = Feature::query()
+            ->pluck('title', 'id');
 
-        return view('products.form', ['categories' => $categories]);
+        return view('products.form', [
+            'categories' => $categories,
+            'features' => $features,
+        ]);
     }
 
     /**
@@ -68,6 +74,17 @@ class ProductController extends Controller
         }
 
         $product->categories()->sync($request->getCatIds());
+
+        $features = [];
+
+        foreach ($request->getFeatureValues() as $key => $value) {
+            $features[] = [
+                'feature_id' => $key,
+                'value' => $value,
+            ];
+        }
+
+        $product->featureValues()->createMany($features);
 
         return redirect()->route('products.index')
             ->with('status', 'Created.');

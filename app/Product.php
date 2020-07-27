@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -41,6 +42,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property-read int|null $media_count
  * @property-read Collection|Category[] $categories
  * @property-read int|null $categories_count
+ * @property-read Collection|ProductFeature[] $featureValues
+ * @property-read int|null $feature_values_count
  */
 class Product extends Model implements HasMedia
 {
@@ -61,6 +64,14 @@ class Product extends Model implements HasMedia
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function featureValues(): HasMany
+    {
+        return $this->hasMany(ProductFeature::class);
     }
 
     /**

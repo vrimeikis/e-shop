@@ -63,6 +63,14 @@ class ProductStoreRequest extends FormRequest
     /**
      * @return array
      */
+    public function getFeatureValues(): array
+    {
+        return $this->input('feature', []);
+    }
+
+    /**
+     * @return array
+     */
     public function getCatIds(): array
     {
         return $this->input('categories', []);
