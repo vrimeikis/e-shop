@@ -28,6 +28,18 @@ use Illuminate\Support\Carbon;
  */
 class ProductFeature extends Model
 {
+
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
+    /**
+     * @var bool
+     */
+    public $incrementing = false;
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'product_id',
         'feature_id',

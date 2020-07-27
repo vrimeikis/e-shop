@@ -14,8 +14,11 @@
                         Products
                     </div>
 
-                    <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('products.'. (isset($item->id) ? 'update' : 'store'), isset($item->id) ? ['product' => $item->id] : []) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @isset($item->id)
+                            @method('put')
+                        @endisset
                         <div class="card-body">
                             @if (session('status'))
                                 <div class="alert alert-success" role="alert">
@@ -26,7 +29,7 @@
                             <div class="form-group">
                                 <label for="title">Title</label>
                                 <input class="form-control @error('title') is-invalid @enderror" id="title" type="text"
-                                       name="title" value="{{ old('title') }}">
+                                       name="title" value="{{ old('title', $item->title ?? null) }}">
                                 @error('title')
                                 <em class="alert-danger">{{ $message }}</em>
                                 @enderror
@@ -35,7 +38,7 @@
                             <div class="form-group">
                                 <label for="slug">Slug</label>
                                 <input class="form-control @error('slug') is-invalid @enderror" id="slug" type="text"
-                                       name="slug" value="{{ old('slug') }}">
+                                       name="slug" value="{{ old('slug', $item->slug ?? null) }}">
                                 @error('slug')
                                 <em class="alert-danger">{{ $message }}</em>
                                 @enderror
@@ -84,7 +87,7 @@
                             <div class="form-group">
                                 <label for="price">Price</label>
                                 <input class="form-control @error('price') is-invalid @enderror" id="price" type="text"
-                                       name="price" value="{{ old('price', 0.01) }}" min="0.01">
+                                       name="price" value="{{ old('price', $item->price ?? 0.01) }}" min="0.01">
                                 @error('price')
                                 <em class="alert-danger">{{ $message }}</em>
                                 @enderror
@@ -94,9 +97,9 @@
                                 <label for="vat">Vat</label>
 
                                 <select class="form-control @error('vat') is-invalid @enderror" id="vat" name="vat">
-                                    <option value="21" @if(old('vat') === 21) selected @endif>21</option>
-                                    <option value="5" @if(old('vat') === 5) selected @endif>5</option>
-                                    <option value="0" @if(old('vat') === 0) selected @endif>0</option>
+                                    <option value="21" @if(old('vat', $item->vat ?? null) === 21) selected @endif>21</option>
+                                    <option value="5" @if(old('vat', $item->vat ?? null) === 5) selected @endif>5</option>
+                                    <option value="0" @if(old('vat', $item->vat ?? null) === 0) selected @endif>0</option>
                                 </select>
 
                                 @error('vat')
@@ -117,7 +120,7 @@
                             <div class="form-group">
                                 <label for="description">Description</label>
                                 <textarea class="form-control @error('description') is-invalid @enderror"
-                                          id="description" name="description">{{ old('description') }}</textarea>
+                                          id="description" name="description">{{ old('description', $item->description ?? null) }}</textarea>
                                 @error('description')
                                 <em class="alert-danger">{{ $message }}</em>
                                 @enderror
@@ -127,7 +130,7 @@
                                 <label for="quantity">Quantity</label>
                                 <input class="form-control @error('quantity') is-invalid @enderror" id="quantity"
                                        type="text"
-                                       name="quantity" value="{{ old('quantity', 0) }}">
+                                       name="quantity" value="{{ old('quantity', $item->quantity ?? 0) }}">
                                 @error('quantity')
                                 <em class="alert-danger">{{ $message }}</em>
                                 @enderror
@@ -139,7 +142,7 @@
                                     <div class="row">
                                         <label>{{ $title }}</label>
                                         <input class="form-control" type="text" id="features"
-                                               name="feature[{{ $id }}]" value="{{ old('feature.' . $id) }}">
+                                               name="feature[{{ $id }}]" value="{{ old('feature.' . $id, Arr::get($itemFeatures ?? [], $id)) }}">
                                     </div>
                                 @endforeach
 
