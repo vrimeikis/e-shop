@@ -11,10 +11,10 @@
                         @else
                             New
                         @endisset
-                        category
+                        feature
                     </div>
 
-                    <form action="{{ route('categories.'.(isset($item->id) ? 'update' : 'store'), isset($item->id) ? ['category' => $item->id] : []) }}"
+                    <form action="{{ route('features.'.(isset($item->id) ? 'update' : 'store'), isset($item->id) ? ['feature' => $item->id] : []) }}"
                           method="post" enctype="multipart/form-data">
                         @csrf
                         @isset($item->id)
@@ -32,15 +32,6 @@
                                 <input class="form-control @error('title') is-invalid @enderror" id="title" type="text"
                                        name="title" value="{{ old('title', $item->title ?? '') }}">
                                 @error('title')
-                                <em class="alert-danger">{{ $message }}</em>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="slug">Slug</label>
-                                <input class="form-control @error('slug') is-invalid @enderror" id="slug" type="text"
-                                       name="slug" value="{{ old('slug', $item->slug ?? '') }}">
-                                @error('slug')
                                 <em class="alert-danger">{{ $message }}</em>
                                 @enderror
                             </div>
