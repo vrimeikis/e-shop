@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -25,6 +26,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ProductFeature whereUpdatedAt($value)
  * @method static Builder|ProductFeature whereValue($value)
  * @mixin \Eloquent
+ * @property-read Feature $feature
  */
 class ProductFeature extends Model
 {
@@ -45,4 +47,12 @@ class ProductFeature extends Model
         'feature_id',
         'value',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function feature(): BelongsTo
+    {
+        return $this->belongsTo(Feature::class);
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\DTO;
 
+use App\DTO\Base\CollectionDTO;
 use App\DTO\Base\DTO;
 use App\Product;
 
@@ -42,7 +43,7 @@ class ProductDTO extends DTO
             'vat' => $this->product->vat,
             'description' => $this->product->description,
             'inStock' => $this->product->quantity,
-            'size' => null,
+            'features' => $this->getFeatures(),
         ];
     }
 
@@ -52,5 +53,23 @@ class ProductDTO extends DTO
     private function getCatTitles(): array
     {
         return $this->product->categories->pluck('title')->toArray();
+    }
+
+    /**
+     * @return CollectionDTO
+     */
+    private function getFeatures(): CollectionDTO
+    {
+        $result = new CollectionDTO();
+
+        foreach ($this->product->featureValues as $productFeature) {
+            if (empty($productFeature->value)) {
+                continue;
+            }
+
+            $result->pushItem(new ProductFeatureDTO($productFeature));
+        }
+
+        return $result;
     }
 }

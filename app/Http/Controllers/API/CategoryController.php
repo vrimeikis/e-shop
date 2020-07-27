@@ -43,7 +43,7 @@ class CategoryController extends Controller
     public function products(string $slug): JsonResponse
     {
         $products = Product::query()
-            ->with('categories')
+            ->with(['categories', 'featureValues', 'featureValues.feature'])
             ->whereHas('categories', function (Builder $q) use ($slug) {
                 $q->where('slug', '=', $slug);
             })
