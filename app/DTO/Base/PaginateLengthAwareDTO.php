@@ -26,6 +26,7 @@ class PaginateLengthAwareDTO extends PaginateDTO
         parent::__construct();
 
         $this->paginator = $paginator;
+        $this->paginator->appends(request()->only(['perPage', 'orderBy', 'orderType']));
 
         $this->setDefaultData();
     }

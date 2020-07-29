@@ -6,6 +6,7 @@ use App\DTO\Base\CollectionDTO;
 use App\DTO\Base\PaginateLengthAwareDTO;
 use App\DTO\ProductDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\PaginateRequest;
 use App\Product;
 use Illuminate\Http\JsonResponse;
 
@@ -16,14 +17,16 @@ use Illuminate\Http\JsonResponse;
 class ProductController extends Controller
 {
     /**
+     * @param PaginateRequest $request
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(PaginateRequest $request): JsonResponse
     {
-        $products = Product::query()
+        $query = Product::query()
             ->with(['categories', 'featureValues', 'featureValues.feature'])
-            ->orderByDesc('created_at')
-            ->paginate();
+            ->orderBy($request->getOrderBy(), $request->getOrderType());
+
+        $products = $query->paginate($request->getPerPage());
 
         $paginateDTO = new PaginateLengthAwareDTO($products);
         $productsDTO = new CollectionDTO();
