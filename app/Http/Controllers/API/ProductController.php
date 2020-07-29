@@ -16,19 +16,42 @@ use Illuminate\Http\JsonResponse;
  */
 class ProductController extends Controller
 {
+//    /**
+//     * @param PaginateRequest $request
+//     * @return JsonResponse
+//     */
+//    public function index(PaginateRequest $request): JsonResponse
+//    {
+//        $query = Product::query()
+//            ->with(['categories', 'featureValues', 'featureValues.feature'])
+//            ->orderBy($request->getOrderBy(), $request->getOrderType());
+//
+//        $products = $query->paginate($request->getPerPage());
+//
+//        $paginateDTO = new PaginateLengthAwareDTO($products);
+//        $productsDTO = new CollectionDTO();
+//
+//        /** @var Product $product */
+//        foreach ($products as $product) {
+//            $productsDTO->pushItem(new ProductDTO($product));
+//        }
+//
+//        $paginateDTO->setData($productsDTO);
+//
+//        return response()->json($paginateDTO);
+//    }
+
     /**
-     * @param PaginateRequest $request
      * @return JsonResponse
      */
-    public function index(PaginateRequest $request): JsonResponse
+    public function index(): JsonResponse
     {
         $query = Product::query()
             ->with(['categories', 'featureValues', 'featureValues.feature'])
-            ->orderBy($request->getOrderBy(), $request->getOrderType());
+            ->orderBy('title');
 
-        $products = $query->paginate($request->getPerPage());
+        $products = $query->get();
 
-        $paginateDTO = new PaginateLengthAwareDTO($products);
         $productsDTO = new CollectionDTO();
 
         /** @var Product $product */
@@ -36,9 +59,7 @@ class ProductController extends Controller
             $productsDTO->pushItem(new ProductDTO($product));
         }
 
-        $paginateDTO->setData($productsDTO);
-
-        return response()->json($paginateDTO);
+        return response()->json($productsDTO);
     }
 
     /**
